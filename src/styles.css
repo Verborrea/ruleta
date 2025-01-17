@@ -1,0 +1,84 @@
+*,*::before,*::after {
+	box-sizing: border-box;
+}
+:root {
+	--bg: #EFEFEF;
+	--deco: #e4e4e4;
+	--text: #1C1D20;
+	--text-low: #989898;
+	--red: #FF595E;
+	--ora: #FF7F3A;
+	--yel: #FFCA3A;
+	--gre: #8AC926;
+	--cya: #27C9A3;
+	--blu: #267BD7;
+	--vio: #6A4C93;
+	--pin: #FF7CE5;
+	--klk: #efefef80;
+}
+:root, input, .btn {
+	font-family: 'Poppins', sans-serif;
+	line-height: 1;
+}
+body {
+	color: var(--text);
+	background: var(--bg);
+}
+body, h1, p {
+	margin: 0;
+}
+
+
+h1 {
+	font-size: 72px;
+}
+h1,.btn {
+	font-weight: 600;
+}
+p {
+	font-size: 24px;
+}
+
+.btn {
+	text-decoration: none;
+	color: var(--text);
+	font-size: 20px;
+	padding: 12px 24px;
+	border-radius: 100px;
+	background: var(--bg);
+	border: 2px solid var(--text);
+	box-shadow: 0px 6px 0px -2px var(--text-low, #989898), 0px 6px 0px 0px var(--text, #1C1D20);
+	transition: 0.1s ease-in-out;
+}
+.btn:active {
+	transform: translateY(6px);
+	box-shadow: 0px 0px 0px -2px var(--text-low, #989898), 0px 0px 0px 0px var(--text, #1C1D20);
+}
+.wrapper svg {
+	flex-shrink: 0;
+	color: var(--text-low);
+}
+.wrapper svg {
+	flex-shrink: 0;
+	color: var(--text-low);
+}
+.wrapper:has(input:focus) svg, .wrapper:has(input:user-valid) svg {
+	color: var(--text);
+}
+
+
+.p6 { padding: 24px }
+.g6 { gap: 24px }
+.g3 { gap: 12px }
+.g4 { gap: 16px }
+.fcol {
+	display: flex;
+	flex-direction: column;
+}
+.fc { align-items: center }
+.center {
+	text-align: center;
+}
+.grow {
+	flex: 1;
+}
