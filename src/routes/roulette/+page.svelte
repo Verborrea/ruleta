@@ -1,30 +1,46 @@
 <script lang="ts">
 	import { Confetti } from "svelte-confetti"
-	import { user } from '$lib/shared.svelte';
-	import { getRandomItem } from '$lib/utils';
 	import { tick } from 'svelte'
-	import congratulations from '$lib/output.mp3';
-	import Roulette from "./Roulette.svelte";
 	import { premios } from "./options";
 	import { goto } from "$app/navigation";
+	import { user } from '$lib/shared.svelte';
+	import { getRandomItem } from '$lib/utils';
+	import Roulette from "./Roulette.svelte";
+	import spinning_sound from '$lib/spinning.mp3';
 
 	let confetti = $state(false);
 	let girar = $state(false);
 	let index = $state(0);
 
-	function printUser() {
+	async function printUser() {
 
 		const premio = getRandomItem(premios)
 		index = premio.index
 
 		user.premio = premio.desc
 
+		if (premio.desc !== "un día más de vida 😇" && premio.desc !== "absolutamente nada. 😅") {
+			try {
+				const response = await fetch('/roulette', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(user)
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+				} else {
+					console.error('Error al añadir la fila:', await response.json());
+				}
+			} catch (error) {
+				console.error('Error de red:', error);
+			}
+		}
+
 		girar = true;
+		const audio1 = new Audio(spinning_sound);
+		audio1.play()
 		setTimeout(async () => {
-
-			// const audio2 = new Audio(congratulations);
-			// audio2.play()
-
 			confetti = false
 			await tick()
 			confetti = true

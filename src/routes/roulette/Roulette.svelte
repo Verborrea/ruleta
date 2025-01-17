@@ -63,7 +63,7 @@
 		opacity: 0.3;
 	}
 	.girar :global(.segmento) {
-		animation: rotate 6s cubic-bezier(0.35, -0.25, 0, 1) forwards;
+		animation: rotate 6s cubic-bezier(0, 0.53, 0.44, 0.96) forwards;
 	}
 	@keyframes rotate {
 		from {
