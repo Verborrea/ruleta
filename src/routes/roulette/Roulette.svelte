@@ -63,14 +63,14 @@
 		opacity: 0.3;
 	}
 	.girar :global(.segmento) {
-		animation: rotate 5s cubic-bezier(0.25, -0.25, 0.5, 1)
+		animation: rotate 6s cubic-bezier(0.35, -0.25, 0, 1);
 	}
 	@keyframes rotate {
 		from {
 			transform: rotate(calc(0deg + var(--segment) + var(--numo)));
 		}
 		to {
-			transform: rotate(calc(calc(5 * 360deg) + var(--segment) + var(--numo)));
+			transform: rotate(calc(calc(8 * 360deg) + var(--segment) + var(--numo)));
 		}
 	}
 	.center {
