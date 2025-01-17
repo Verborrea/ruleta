@@ -4,7 +4,7 @@
 
 	let ruleta = $state();
 
-	let { girar } = $props();
+	let { girar, index } = $props();
 
 	const colores = ['var(--red)', 'var(--ora)', 'var(--yel)', 'var(--gre)', 'var(--cya)', 'var(--blu)', 'var(--vio)', 'var(--pin)'];
 	const numPremios = premios.length;
@@ -25,7 +25,7 @@
 	})
 </script>
 
-<div class="ruleta" class:girar id="ruleta" bind:this={ruleta} style="--numo: {`${180 / numPremios}deg`}">
+<div class="ruleta" class:girar id="ruleta" bind:this={ruleta} style="--numo: {`${180 / numPremios}deg`}; --index: {index}">
 	<div class="center">GAUDí</div>
 </div>
 
@@ -63,14 +63,18 @@
 		opacity: 0.3;
 	}
 	.girar :global(.segmento) {
-		animation: rotate 6s cubic-bezier(0.35, -0.25, 0, 1);
+		animation: rotate 6s cubic-bezier(0.35, -0.25, 0, 1) forwards;
 	}
 	@keyframes rotate {
 		from {
 			transform: rotate(calc(0deg + var(--segment) + var(--numo)));
 		}
 		to {
-			transform: rotate(calc(calc(8 * 360deg) + var(--segment) + var(--numo)));
+			transform: rotate(
+				calc(
+					calc(8 * 360deg) + var(--segment) + var(--numo) - calc(45deg * var(--index))
+					)
+			);
 		}
 	}
 	.center {

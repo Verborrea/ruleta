@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Confetti } from "svelte-confetti"
 	import { user } from '$lib/shared.svelte';
+	import { getRandomItem } from '$lib/utils';
 	import { tick } from 'svelte'
 	import congratulations from '$lib/output.mp3';
 	import Roulette from "./Roulette.svelte";
@@ -9,28 +10,24 @@
 
 	let confetti = $state(false);
 	let girar = $state(false);
-
-	function getRandomElement(array: any[]) {
-		if (!Array.isArray(array) || array.length === 0) {
-			throw new Error("El argumento debe ser un array no vacío.");
-		}
-		const randomIndex = Math.floor(Math.random() * array.length);
-		return array[randomIndex];
-	}
-
+	let index = $state(0);
 
 	function printUser() {
 
+		const premio = getRandomItem(premios)
+		index = premio.index
+
+		user.premio = premio.desc
+
 		girar = true;
 		setTimeout(async () => {
-			girar = false
-			// const audio2 = new Audio(congratulations);
-			// audio2.play();
-			confetti = false
-			await tick();
-			confetti = true
 
-			user.premio = getRandomElement(premios).desc;
+			// const audio2 = new Audio(congratulations);
+			// audio2.play()
+
+			confetti = false
+			await tick()
+			confetti = true
 
 			const dialog = document.getElementById("favDialog") as HTMLDialogElement
 			dialog.showModal()
@@ -41,24 +38,28 @@
 	function closeDialog() {
 		const dialog = document.getElementById("favDialog") as HTMLDialogElement
 		dialog.close()
-		user.name = ''
-		user.mail = ''
-		user.phone = ''
-		user.instagram = ''
-		user.premio = ''
-		goto('/')
+		girar = false
+
+		if (user.premio !== "otra oportunidad 🔁") {
+			user.name = ''
+			user.mail = ''
+			user.phone = ''
+			user.instagram = ''
+			user.premio = ''
+			goto('/')
+		}
 	}
 </script>
 
 <header>
 	<p class="center">Ok {user.name.split(' ')[0]}, ahora desliza tu dedo para ganar</p>
 </header>
-<Roulette {girar}/>
+<Roulette {girar} {index}/>
 <button type="button" class="btn" onclick={printUser}>GIRAR</button>
 <dialog id="favDialog" class="g6" open={false}>
 	<div class="fcol fc g6">
 		<h1 class="center">¡Felicidades!<br/>🎊 {user.name.split(' ')[0]} 🎊</h1>
-		<p class="center">Acabas de ganar {user.premio}</p>
+		<p class="center">Acabas de ganar... {user.premio}</p>
 		<button type="button" onclick={closeDialog} class="btn">Gracias 😊</button>
 	</div>
 	{#if confetti}
@@ -69,10 +70,6 @@
 </dialog>
 
 <style>
-	.rel {
-		position: relative;
-		z-index: 999;
-	}
 	.abs {
 		position: absolute;
 		left: 50%;

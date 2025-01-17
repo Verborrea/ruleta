@@ -3,5 +3,5 @@ export const user = $state({
 	mail: "",
 	phone: "",
 	instagram: "",
-	premio: "Una botella de Kombucha"
+	premio: ""
 });

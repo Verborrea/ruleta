@@ -12,7 +12,6 @@
 
 	function handleSubmit(e: Event) {
 		e.preventDefault();
-		console.log(user.mail)
 		if (user.mail === '' || (user.mail && validateEmail(user.mail))) {
 			goto('/roulette')
 		}
