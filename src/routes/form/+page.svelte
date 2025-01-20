@@ -7,31 +7,35 @@
 	import { user } from '$lib/shared.svelte';
 	import { validateEmail } from "$lib/utils";
 	import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
 
 	let { next } = $props();
 
 	function handleSubmit(e: Event) {
 		e.preventDefault();
-		if (user.mail === '' || (user.mail && validateEmail(user.mail))) {
+		if (user.datos.mail === '' || (user.datos.mail && validateEmail(user.datos.mail))) {
 			goto('/roulette')
+		}
+
+		if (window.localStorage) {
+			localStorage.setItem('user', JSON.stringify(user))
 		}
 	}
 
 	function handleInput(e: Event) {
 		let target = e.target as HTMLInputElement
-		// Eliminar cualquier carácter que no sea un número
 		let value = target.value.replace(/\D/g, '');
-
-		// Formatear el valor: agregar un espacio cada tres dígitos
 		const formattedValue = value.replace(/(\d{3})(?=\d)/g, '$1 ');
-
-		// Establecer el nuevo valor formateado
 		target.value = formattedValue;
 	}
+
+	onMount(() => {
+		user.initialize()
+	})
 </script>
 
 <p class="center">Ingresa tus datos para jugar:</p>
-<form id="leform" class="fcol g4" method="get" onsubmit={handleSubmit}>
+<form id="myForm" class="fcol g4" method="get" onsubmit={handleSubmit}>
 	<label for="name">
 		<div class="wrapper">
 			<UserRound size={20} absoluteStrokeWidth />
@@ -40,7 +44,7 @@
 				name="name"
 				id="name"
 				placeholder="Pepe"
-				bind:value={user.name}
+				bind:value={user.datos.name}
 				required
 			/>
 		</div>
@@ -58,7 +62,7 @@
 				maxlength="11"
 				required
 				inputmode="numeric"
-				bind:value={user.phone}
+				bind:value={user.datos.phone}
 				oninput={handleInput}
 			/>
 		</div>
@@ -72,7 +76,7 @@
 				name="email"
 				id="email"
 				placeholder="tu@correo.com"
-				bind:value={user.mail}
+				bind:value={user.datos.mail}
 			/>
 		</div>
 		<span>Correo</span>
@@ -82,16 +86,17 @@
 			<AtSign size={20} absoluteStrokeWidth />
 			<input
 				type="text"
+				autocapitalize="none"
 				name="instagram"
 				id="instagram"
 				placeholder="kombucha_lover"
-				bind:value={user.instagram}
+				bind:value={user.datos.instagram}
 			/>
 		</div>
 		<span>Instagram</span>
 	</label>
 </form>
-<button form="leform" type="submit" class="btn" onclick={next}>A jugar!</button>
+<button form="myForm" type="submit" class="btn" onclick={next}>A jugar!</button>
 
 <style>
 	form {

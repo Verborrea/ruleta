@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Confetti } from "svelte-confetti"
-	import { tick } from 'svelte'
+	import { onMount, tick } from 'svelte'
 	import { premios } from "./options";
 	import { goto } from "$app/navigation";
 	import { user } from '$lib/shared.svelte';
@@ -11,15 +11,20 @@
 	let confetti = $state(false);
 	let girar = $state(false);
 	let index = $state(0);
+	let premio: any;
 
 	async function printUser() {
 
-		const premio = getRandomItem(premios)
-		index = premio.index
+		girar = true;
+		const audio1 = new Audio(spinning_sound);
+		audio1.play()
 
-		user.premio = premio.desc
+		premio = getRandomItem(premios)
+		index = premio.id
 
-		if (premio.desc !== "un día más de vida 😇" && premio.desc !== "absolutamente nada. 😅") {
+		user.datos.premio = premio.desc
+
+		if (premio.id !== 3 && premio.id !== 4 && premio.id !== 7) {
 			try {
 				const response = await fetch('/roulette', {
 					method: 'POST',
@@ -37,9 +42,6 @@
 			}
 		}
 
-		girar = true;
-		const audio1 = new Audio(spinning_sound);
-		audio1.play()
 		setTimeout(async () => {
 			confetti = false
 			await tick()
@@ -56,26 +58,35 @@
 		dialog.close()
 		girar = false
 
-		if (user.premio !== "otra oportunidad 🔁") {
-			user.name = ''
-			user.mail = ''
-			user.phone = ''
-			user.instagram = ''
-			user.premio = ''
+		if (premio.id !== 4) {
+			user.datos.name = ''
+			user.datos.mail = ''
+			user.datos.phone = ''
+			user.datos.instagram = ''
+			user.datos.premio = ''
+
+			if (window.localStorage) {
+				localStorage.removeItem('user')
+			}
+
 			goto('/')
 		}
 	}
+
+	onMount(() => {
+		user.initialize()
+	})
 </script>
 
 <header>
-	<p class="center">Ok {user.name.split(' ')[0]}, ahora desliza tu dedo para ganar</p>
+	<p class="center">Ok {user.datos.name.split(' ')[0]}, es hora de ganar!</p>
 </header>
 <Roulette {girar} {index}/>
 <button type="button" class="btn" onclick={printUser}>GIRAR</button>
 <dialog id="favDialog" class="g6" open={false}>
 	<div class="fcol fc g6">
-		<h1 class="center">¡Felicidades!<br/>🎊 {user.name.split(' ')[0]} 🎊</h1>
-		<p class="center">Acabas de ganar... {user.premio}</p>
+		<h1 class="center">¡Felicidades!<br/>🎊 {user.datos.name.split(' ')[0]} 🎊</h1>
+		<p class="center">Acabas de ganar... {user.datos.premio}</p>
 		<button type="button" onclick={closeDialog} class="btn">Gracias 😊</button>
 	</div>
 	{#if confetti}

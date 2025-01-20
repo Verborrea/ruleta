@@ -92,6 +92,7 @@
 		border-radius: 100%;
 		font-weight: 700;
 		letter-spacing: -0.04em;
+		filter: drop-shadow(0 4px 20px #1c1d2040);
 	}
 	.center::before {
 		position: absolute;

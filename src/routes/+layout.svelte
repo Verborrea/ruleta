@@ -13,21 +13,7 @@
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M48 0C21.4903 0 0 21.4903 0 48V184H24V48C24 34.7452 34.7452 24 48 24H144V0H48Z" fill="var(--deco)"/>
 		</svg>
 		<svg class="points" width="168" height="96" viewBox="0 0 168 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="12" cy="12" r="12" fill="var(--deco)"/>
-			<circle cx="48" cy="12" r="12" fill="var(--deco)"/>
-			<circle cx="84" cy="12" r="12" fill="var(--deco)"/>
-			<circle cx="120" cy="12" r="12" fill="var(--deco)"/>
-			<circle cx="156" cy="12" r="12" fill="var(--deco)"/>
-			<circle cx="12" cy="48" r="12" fill="var(--deco)"/>
-			<circle cx="48" cy="48" r="12" fill="var(--deco)"/>
-			<circle cx="84" cy="48" r="12" fill="var(--deco)"/>
-			<circle cx="120" cy="48" r="12" fill="var(--deco)"/>
-			<circle cx="156" cy="48" r="12" fill="var(--deco)"/>
-			<circle cx="12" cy="84" r="12" fill="var(--deco)"/>
-			<circle cx="48" cy="84" r="12" fill="var(--deco)"/>
-			<circle cx="84" cy="84" r="12" fill="var(--deco)"/>
-			<circle cx="120" cy="84" r="12" fill="var(--deco)"/>
-			<circle cx="156" cy="84" r="12" fill="var(--deco)"/>
+			<circle cx="12" cy="12" r="12" fill="var(--deco)"/><circle cx="48" cy="12" r="12" fill="var(--deco)"/><circle cx="84" cy="12" r="12" fill="var(--deco)"/><circle cx="120" cy="12" r="12" fill="var(--deco)"/><circle cx="156" cy="12" r="12" fill="var(--deco)"/><circle cx="12" cy="48" r="12" fill="var(--deco)"/><circle cx="48" cy="48" r="12" fill="var(--deco)"/><circle cx="84" cy="48" r="12" fill="var(--deco)"/><circle cx="120" cy="48" r="12" fill="var(--deco)"/><circle cx="156" cy="48" r="12" fill="var(--deco)"/><circle cx="12" cy="84" r="12" fill="var(--deco)"/><circle cx="48" cy="84" r="12" fill="var(--deco)"/><circle cx="84" cy="84" r="12" fill="var(--deco)"/><circle cx="120" cy="84" r="12" fill="var(--deco)"/><circle cx="156" cy="84" r="12" fill="var(--deco)"/>
 		</svg>
 	</div>
 	{@render children()}

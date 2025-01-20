@@ -15,14 +15,12 @@ export function getRandomItem(items: any[]) {
 
   const random = Math.random() * totalWeight;
   let cumulativeWeight = 0;
-  let counter = 0;
 
   for (const item of items) {
     cumulativeWeight += item.prob;
     if (random < cumulativeWeight) {
-      return {...item, index: counter};
+      return item
     }
-    counter++;
   }
 
   throw new Error("No se pudo seleccionar un elemento. Verifica las probabilidades.");
