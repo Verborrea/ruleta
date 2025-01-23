@@ -29,7 +29,7 @@
 				const response = await fetch('/roulette', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(user)
+					body: JSON.stringify(user.datos)
 				});
 
 				if (response.ok) {
