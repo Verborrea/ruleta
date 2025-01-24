@@ -30,6 +30,9 @@
 
 	async function seleccionarPremio() {
 		if (premios.length > 0) {
+			// Eliminar premios con times == 0
+			premios = premios.filter((p) => p.times > 0);
+
 			// Seleccionar premio aleatorio
 			const randomIndex = Math.floor(Math.random() * premios.length);
 			premio = premios[randomIndex];
@@ -37,9 +40,6 @@
 			// Reducir el contador y actualizar en la base de datos
 			premio.times -= 1;
 			await updatePremioInDB({ id: premio.id, times: premio.times });
-
-			// Eliminar premios con times == 0
-			premios = premios.filter((p) => p.times > 0);
 		}
 	}
 
