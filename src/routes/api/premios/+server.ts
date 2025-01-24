@@ -3,7 +3,7 @@ import { supabase } from '$lib/supabaseClient';
 
 // Obtener todos los premios
 export async function GET() {
-	const { data, error } = await supabase.from('premios').select('*');
+	const { data, error } = await supabase.from('premios').select('*').order('id');
 
 	if (error) {
 		return new Response(error.message, { status: 500 });
