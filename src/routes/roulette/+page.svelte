@@ -55,7 +55,7 @@
 
 		user.datos.premio = premio.description
 
-		if (premio.id !== 2 && premio.id !== 5 && premio.id !== 6) {
+		if (premio.id !== 2 && premio.id !== 6) {
 			myText = "Gracias 😊"
 			try {
 				const response = await fetch('/roulette', {
@@ -92,7 +92,7 @@
 		dialog.close()
 		girar = false
 
-		if (premio.id !== 2 && premio.id !== 5 && premio.id !== 6) {
+		if (premio.id !== 2 && premio.id !== 6) {
 			user.datos.name = ''
 			user.datos.mail = ''
 			user.datos.phone = ''
