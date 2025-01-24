@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { Confetti } from "svelte-confetti"
 	import { onMount, tick } from 'svelte'
-	// import { premios } from "./options";
 	import { goto } from "$app/navigation";
 	import { user } from '$lib/shared.svelte';
-	// import { getRandomItem } from '$lib/utils';
 	import Roulette from "./Roulette.svelte";
 	import spinning_sound from '$lib/spinning.mp3';
 
