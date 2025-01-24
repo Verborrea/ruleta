@@ -34,8 +34,18 @@
 			premios = premios.filter((p) => p.times > 0);
 
 			// Seleccionar premio aleatorio
-			const randomIndex = Math.floor(Math.random() * premios.length);
-			premio = premios[randomIndex];
+			const totalWeight = premios.reduce((sum, p) => sum + p.prob, 0);
+
+			const random = Math.random() * totalWeight;
+			let cumulativeWeight = 0;
+
+			for (const item of premios) {
+				cumulativeWeight += item.prob;
+				if (random < cumulativeWeight) {
+					premio = item
+					break
+				}
+			}
 
 			// Reducir el contador y actualizar en la base de datos
 			premio.times -= 1;
