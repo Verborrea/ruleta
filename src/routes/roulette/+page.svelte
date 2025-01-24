@@ -24,7 +24,7 @@
 
 		user.datos.premio = premio.desc
 
-		if (premio.id !== 3 && premio.id !== 4 && premio.id !== 7) {
+		if (premio.id !== 2 && premio.id !== 6) {
 			try {
 				const response = await fetch('/roulette', {
 					method: 'POST',
@@ -58,7 +58,7 @@
 		dialog.close()
 		girar = false
 
-		if (premio.id !== 4) {
+		if (premio.id !== 2 && premio.id !== 6) {
 			user.datos.name = ''
 			user.datos.mail = ''
 			user.datos.phone = ''
