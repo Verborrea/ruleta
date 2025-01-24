@@ -1,17 +1,49 @@
 <script lang="ts">
 	import { Confetti } from "svelte-confetti"
 	import { onMount, tick } from 'svelte'
-	import { premios } from "./options";
+	// import { premios } from "./options";
 	import { goto } from "$app/navigation";
 	import { user } from '$lib/shared.svelte';
-	import { getRandomItem } from '$lib/utils';
+	// import { getRandomItem } from '$lib/utils';
 	import Roulette from "./Roulette.svelte";
 	import spinning_sound from '$lib/spinning.mp3';
 
 	let confetti = $state(false);
 	let girar = $state(false);
 	let index = $state(0);
+	let myText = $state("Gracias 😊");
+
 	let premio: any;
+	let premios: any[] = [];
+
+	async function fetchPremios() {
+		const response = await fetch('/api/premios');
+		premios = await response.json();
+	}
+
+	// Actualizar premio en la base de datos
+	async function updatePremioInDB(item: any) {
+		await fetch('/api/premios', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(item)
+		});
+	}
+
+	async function seleccionarPremio() {
+		if (premios.length > 0) {
+			// Seleccionar premio aleatorio
+			const randomIndex = Math.floor(Math.random() * premios.length);
+			premio = premios[randomIndex];
+
+			// Reducir el contador y actualizar en la base de datos
+			premio.times -= 1;
+			await updatePremioInDB({ id: premio.id, times: premio.times });
+
+			// Eliminar premios con times == 0
+			premios = premios.filter((p) => p.times > 0);
+		}
+	}
 
 	async function printUser() {
 
@@ -19,12 +51,14 @@
 		const audio1 = new Audio(spinning_sound);
 		audio1.play()
 
-		premio = getRandomItem(premios)
+		// premio = getRandomItem(premios)
+		seleccionarPremio()
 		index = premio.id
 
-		user.datos.premio = premio.desc
+		user.datos.premio = premio.description
 
 		if (premio.id !== 2 && premio.id !== 6) {
+			myText = "Gracias 😊"
 			try {
 				const response = await fetch('/roulette', {
 					method: 'POST',
@@ -40,6 +74,8 @@
 			} catch (error) {
 				console.error('Error de red:', error);
 			}
+		} else {
+			myText = "Girar de nuevo"		
 		}
 
 		setTimeout(async () => {
@@ -73,8 +109,9 @@
 		}
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		user.initialize()
+		await fetchPremios()
 	})
 </script>
 
@@ -87,7 +124,7 @@
 	<div class="fcol fc g6">
 		<h1 class="center">¡Felicidades!<br/>🎊 {user.datos.name.split(' ')[0]} 🎊</h1>
 		<p class="center">Acabas de ganar... {user.datos.premio}</p>
-		<button type="button" onclick={closeDialog} class="btn">Gracias 😊</button>
+		<button type="button" onclick={closeDialog} class="btn">{myText}</button>
 	</div>
 	{#if confetti}
 		<div class="abs">

@@ -23,6 +23,7 @@
 	},
 	"dependencies": {
 		"@notionhq/client": "^2.2.15",
+		"@supabase/supabase-js": "^2.48.1",
 		"d3": "^7.9.0",
 		"lucide-svelte": "^0.471.0"
 	}
